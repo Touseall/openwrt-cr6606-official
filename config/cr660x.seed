@@ -71,23 +71,11 @@ CONFIG_PACKAGE_luci-app-fullconenat=y
 CONFIG_PACKAGE_luci-i18n-fullconenat-zh-cn=y
 
 ###############################################
-# SSR+ (fw876/helloworld)
-###############################################
-CONFIG_PACKAGE_luci-app-ssr-plus=y
-CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
-CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
-CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
-CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir=y
-CONFIG_PACKAGE_shadowsocksr-libev-ssr-local=y
-CONFIG_PACKAGE_xray-core=y
-CONFIG_PACKAGE_trojan=y
-CONFIG_PACKAGE_simple-obfs=y
-
-###############################################
-# Passwall (OpenWrt-Passwall 官方源)
+# Passwall（含 Xray-core）
 ###############################################
 CONFIG_PACKAGE_luci-app-passwall=y
 CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
+CONFIG_PACKAGE_xray-core=y
 CONFIG_PACKAGE_haproxy=y
 CONFIG_PACKAGE_ipt2socks=y
 CONFIG_PACKAGE_microsocks=y
