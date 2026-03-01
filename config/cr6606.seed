@@ -1,59 +1,100 @@
-# 目标平台：ramips / mt7621 / Xiaomi CR6606
+###############################################
+# Target: Xiaomi CR6606 (ramips / mt7621)
+###############################################
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
 CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_mi-router-cr6606=y
 
-# 基础系统
+###############################################
+# Base System
+###############################################
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-ssl=y
-CONFIG_PACKAGE_luci-base=y
 CONFIG_PACKAGE_luci-mod-admin-full=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
+CONFIG_PACKAGE_luci-base=y
 
-# 网络基础（旁路由常用）
-CONFIG_PACKAGE_iptables-nft=y
-CONFIG_PACKAGE_ip-full=y
+###############################################
+# Language (Chinese)
+###############################################
+CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y
+
+###############################################
+# Networking (旁路由必备)
+###############################################
 CONFIG_PACKAGE_dnsmasq-full=y
+CONFIG_PACKAGE_ip-full=y
 CONFIG_PACKAGE_ca-certificates=y
-
-# UPnP（旁路由端口自动转发）
-CONFIG_PACKAGE_miniupnpd=y
-CONFIG_PACKAGE_luci-app-upnp=y
-
-# SSR+ / Passwall（来自 kenzok8 feeds）
-CONFIG_PACKAGE_luci-app-ssr-plus=y
-CONFIG_PACKAGE_luci-app-passwall=y
-
-# SSR+ 依赖的一些常见内核/工具（具体依赖由 feeds 决定，这里给常见组合）
-CONFIG_PACKAGE_ipset=y
-CONFIG_PACKAGE_iptables-mod-tproxy=y
-CONFIG_PACKAGE_iptables-mod-extra=y
-CONFIG_PACKAGE_kmod-tun=y
+CONFIG_PACKAGE_iptables-nft=y
+CONFIG_PACKAGE_kmod-nft-core=y
+CONFIG_PACKAGE_kmod-nft-nat=y
 CONFIG_PACKAGE_kmod-nft-tproxy=y
 CONFIG_PACKAGE_kmod-nft-socket=y
 
-# TCP/UDP 透明代理常用
-CONFIG_PACKAGE_redsocks2=y
-CONFIG_PACKAGE_ipt2socks=y
-CONFIG_PACKAGE_microsocks=y
+###############################################
+# UPnP
+###############################################
+CONFIG_PACKAGE_miniupnpd=y
+CONFIG_PACKAGE_luci-app-upnp=y
+CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y
 
-# FullCone（不同实现很多，这里先打开常见内核模块，具体实现由插件决定）
+###############################################
+# FullCone NAT (官方 fullcone-nftables)
+###############################################
 CONFIG_PACKAGE_kmod-nft-fullcone=y
 CONFIG_PACKAGE_luci-app-fullconenat=y
+CONFIG_PACKAGE_luci-i18n-fullconenat-zh-cn=y
 
-# 常用工具
+###############################################
+# SSR+ (fw876/helloworld)
+###############################################
+CONFIG_PACKAGE_luci-app-ssr-plus=y
+CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
+CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
+CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir=y
+CONFIG_PACKAGE_shadowsocksr-libev-ssr-local=y
+CONFIG_PACKAGE_xray-core=y
+CONFIG_PACKAGE_trojan=y
+CONFIG_PACKAGE_simple-obfs=y
+
+###############################################
+# Passwall (xiaorouji/openwrt-passwall)
+###############################################
+CONFIG_PACKAGE_luci-app-passwall=y
+CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
+CONFIG_PACKAGE_haproxy=y
+CONFIG_PACKAGE_ipt2socks=y
+CONFIG_PACKAGE_microsocks=y
+CONFIG_PACKAGE_redsocks2=y
+
+###############################################
+# Tools
+###############################################
 CONFIG_PACKAGE_htop=y
-CONFIG_PACKAGE_vim-full=y
+CONFIG_PACKAGE_tcping=y
+CONFIG_PACKAGE_nping=y
 CONFIG_PACKAGE_curl=y
 CONFIG_PACKAGE_wget=y
 
-# LuCI 中文（如果你想要）
-CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y
+###############################################
+# Disable unnecessary components (旁路由不需要)
+###############################################
+# WiFi
+CONFIG_PACKAGE_kmod-mt7915e=n
+CONFIG_PACKAGE_kmod-mt7915-firmware=n
 
-# 去掉不需要的 PPPoE / IPv6（如果你只做旁路由，可选）
-# CONFIG_PACKAGE_ppp is not set
-# CONFIG_PACKAGE_ppp-mod-pppoe is not set
+# PPPoE
+CONFIG_PACKAGE_ppp=n
+CONFIG_PACKAGE_ppp-mod-pppoe=n
+
+# IPv6 (旁路由可选关闭)
+CONFIG_IPV6=n
+CONFIG_PACKAGE_dnsmasq_full_dhcpv6=n
+CONFIG_PACKAGE_odhcp6c=n
+CONFIG_PACKAGE_odhcpd-ipv6only=n
+
+###############################################
+# End
+###############################################
