@@ -1,4 +1,4 @@
-name: Build OpenWrt CR6606 (Official + SSR+ / Passwall / FullCone)
+name: Build OpenWrt CR660X (Official + SSR+ / Passwall / FullCone)
 
 on:
   workflow_dispatch:
@@ -41,10 +41,10 @@ jobs:
         ./scripts/feeds install -a -p fullcone
         ./scripts/feeds install -a
 
-    - name: Load CR6606 seed config
+    - name: Load CR660X seed config
       run: |
         cd openwrt
-        cp ../config/cr6606.seed .config
+        cp ../config/cr660x.seed .config
         make defconfig
 
     - name: Show final target info
@@ -52,7 +52,7 @@ jobs:
         cd openwrt
         echo "==== TARGET CHECK ===="
         grep CONFIG_TARGET_ .config || true
-        grep CR6606 .config || true
+        grep CR660X .config || true
 
     - name: Compile firmware
       run: |
@@ -62,7 +62,7 @@ jobs:
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: openwrt-cr6606-official
+        name: openwrt-cr660x-official
         path: |
           openwrt/bin/targets/
           openwrt/bin/packages/
