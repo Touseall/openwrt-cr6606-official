@@ -1,4 +1,4 @@
-name: Build OpenWrt CR660X (Master + Passwall / FullCone / WiFi / PPPoE / Argon)
+name: Build OpenWrt CR660X (Master + Passwall2 / FullCone / WiFi / PPPoE / Argon)
 
 on:
   workflow_dispatch:
@@ -26,15 +26,15 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
 
-    - name: Add extra feeds (Passwall)
+    - name: Add extra feeds (Passwall2)
       run: |
         cd openwrt
         cat >> feeds.conf.default << "EOF"
-        src-git passwall https://github.com/OpenWrt-Passwall/openwrt-passwall
+        src-git passwall2 https://github.com/OpenWrt-Passwall/openwrt-passwall2
         EOF
 
-        ./scripts/feeds update passwall
-        ./scripts/feeds install -a -p passwall
+        ./scripts/feeds update passwall2
+        ./scripts/feeds install -a -p passwall2
         ./scripts/feeds install -a
 
     - name: Load CR660X seed config
