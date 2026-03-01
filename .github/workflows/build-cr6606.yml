@@ -1,4 +1,4 @@
-name: Build OpenWrt CR6606 (Official + SSR+/Passwall)
+name: Build OpenWrt CR6606 (Official + SSR+ / Passwall / FullCone)
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
 
     - name: Clone official OpenWrt source
       run: |
-        git clone https://github.com/openwrt/openwrt.git -b openwrt-23.05.3 --depth 1 openwrt
+        git clone https://github.com/openwrt/openwrt.git -b openwrt-23.05 --depth 1 openwrt
         cd openwrt
         ./scripts/feeds update -a
 
@@ -34,25 +34,22 @@ jobs:
         src-git small https://github.com/kenzok8/small
         EOF
 
-
         ./scripts/feeds update kenzo small
         ./scripts/feeds install -a -p kenzo
         ./scripts/feeds install -a -p small
-
-        # 再安装官方 feeds（luci / packages / routing / telephony）
         ./scripts/feeds install -a
 
-    - name: Copy CR6606 seed config
+    - name: Load CR6606 seed config
       run: |
         cd openwrt
         mkdir -p tmp-config
-        cp ../config/cr6606.seed tmp-config/.config
-        # 基于 seed 生成完整 .config
+        cp ../config/cr6606.seed .config
         make defconfig
 
     - name: Show final target info
       run: |
         cd openwrt
+        echo "==== TARGET CHECK ===="
         grep CONFIG_TARGET_ .config || true
         grep CR6606 .config || true
 
