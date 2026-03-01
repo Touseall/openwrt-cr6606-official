@@ -26,23 +26,24 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
 
-    - name: Add extra feeds (SSR+ / Passwall / FullCone)
+    - name: Add extra feeds (Official SSR+ / Passwall / FullCone)
       run: |
         cd openwrt
         cat >> feeds.conf.default << "EOF"
-        src-git kenzo https://github.com/kenzok8/openwrt-packages
-        src-git small https://github.com/kenzok8/small
+        src-git helloworld https://github.com/fw876/helloworld
+        src-git passwall https://github.com/xiaorouji/openwrt-passwall
+        src-git fullcone https://github.com/fullcone-nat-nftables/openwrt-fullcone
         EOF
 
-        ./scripts/feeds update kenzo small
-        ./scripts/feeds install -a -p kenzo
-        ./scripts/feeds install -a -p small
+        ./scripts/feeds update helloworld passwall fullcone
+        ./scripts/feeds install -a -p helloworld
+        ./scripts/feeds install -a -p passwall
+        ./scripts/feeds install -a -p fullcone
         ./scripts/feeds install -a
 
     - name: Load CR6606 seed config
       run: |
         cd openwrt
-        mkdir -p tmp-config
         cp ../config/cr6606.seed .config
         make defconfig
 
