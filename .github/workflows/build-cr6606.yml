@@ -26,19 +26,17 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
 
-    - name: Add extra feeds (Official SSR+ / Passwall / FullCone)
+    - name: Add extra feeds (Official SSR+ / Passwall)
       run: |
         cd openwrt
         cat >> feeds.conf.default << "EOF"
         src-git helloworld https://github.com/fw876/helloworld
         src-git passwall https://github.com/OpenWrt-Passwall/openwrt-passwall
-        src-git fullcone https://github.com/fullcone-nat-nftables/openwrt-fullcone-nft
         EOF
 
-        ./scripts/feeds update helloworld passwall fullcone
+        ./scripts/feeds update helloworld passwall
         ./scripts/feeds install -a -p helloworld
         ./scripts/feeds install -a -p passwall
-        ./scripts/feeds install -a -p fullcone
         ./scripts/feeds install -a
 
     - name: Load CR660X seed config
