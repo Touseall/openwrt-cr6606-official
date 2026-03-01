@@ -29,11 +29,11 @@ jobs:
     - name: Add extra feeds (SSR+ / Passwall / FullCone)
       run: |
         cd openwrt
-        # 追加第三方常用包源（kenzok8）
         cat >> feeds.conf.default << "EOF"
 src-git kenzo https://github.com/kenzok8/openwrt-packages
 src-git small https://github.com/kenzok8/small
 EOF
+
 
         ./scripts/feeds update kenzo small
         ./scripts/feeds install -a -p kenzo
