@@ -64,7 +64,7 @@ CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y
 
 ###############################################
-# FullCone NAT（官方 OpenWrt 已内置）
+# FullCone NAT（OpenWrt master 已内置）
 ###############################################
 CONFIG_PACKAGE_kmod-nft-fullcone=y
 CONFIG_PACKAGE_luci-app-fullconenat=y
