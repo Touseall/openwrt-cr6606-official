@@ -1,4 +1,4 @@
-name: Build OpenWrt CR660X (Official + SSR+ / Passwall / FullCone)
+name: Build OpenWrt CR660X (Official + SSR+ / Passwall / FullCone / WiFi / PPPoE / Argon)
 
 on:
   workflow_dispatch:
@@ -31,8 +31,8 @@ jobs:
         cd openwrt
         cat >> feeds.conf.default << "EOF"
         src-git helloworld https://github.com/fw876/helloworld
-        src-git passwall https://github.com/xiaorouji/openwrt-passwall
-        src-git fullcone https://github.com/fullcone-nat-nftables/openwrt-fullcone
+        src-git passwall https://github.com/OpenWrt-Passwall/openwrt-passwall
+        src-git fullcone https://github.com/fullcone-nat-nftables/openwrt-fullcone-nft
         EOF
 
         ./scripts/feeds update helloworld passwall fullcone
