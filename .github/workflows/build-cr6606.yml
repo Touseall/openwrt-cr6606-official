@@ -1,4 +1,4 @@
-name: Build OpenWrt CR660X (23.05 + SSR+ / FullCone / WiFi / PPPoE / Argon)
+name: Build OpenWrt CR660X (23.05 + SSR+ Stable)
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout this repo (configs only)
+    - name: Checkout this repo
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -26,12 +26,23 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
 
-    - name: Add extra feeds (SSR+)
+    - name: Add SSR+ feed (with retry + fallback)
       run: |
         cd openwrt
-        cat >> feeds.conf.default << "EOF"
-        src-git helloworld https://github.com/fw876/helloworld
-        EOF
+
+        echo "src-git helloworld https://github.com/fw876/helloworld" >> feeds.conf.default
+
+        echo "尝试克隆 SSR+ 主源..."
+        for i in 1 2 3 4 5; do
+          git clone https://github.com/fw876/helloworld feeds/helloworld && break
+          echo "主源失败，重试第 $i 次..."
+          sleep 5
+        done
+
+        if [ ! -d "feeds/helloworld" ]; then
+          echo "主源失败，切换到镜像源..."
+          git clone https://mirror.ghproxy.com/https://github.com/fw876/helloworld feeds/helloworld
+        fi
 
         ./scripts/feeds update helloworld
         ./scripts/feeds install -a -p helloworld
