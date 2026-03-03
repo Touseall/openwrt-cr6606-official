@@ -1,4 +1,4 @@
-name: Build OpenWrt CR660X (Master + Passwall2 / FullCone / WiFi / PPPoE / Argon)
+name: Build OpenWrt CR660X (23.05 + Passwall2 / FullCone / WiFi / PPPoE / Argon)
 
 on:
   workflow_dispatch:
@@ -20,9 +20,9 @@ jobs:
           gettext git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev \
           file wget curl python3
 
-    - name: Clone OpenWrt master
+    - name: Clone OpenWrt 23.05
       run: |
-        git clone https://github.com/openwrt/openwrt.git -b master --depth 1 openwrt
+        git clone https://github.com/openwrt/openwrt.git -b openwrt-23.05 --depth 1 openwrt
         cd openwrt
         ./scripts/feeds update -a
 
@@ -58,7 +58,7 @@ jobs:
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: openwrt-cr660x-master
+        name: openwrt-cr660x-23.05
         path: |
           openwrt/bin/targets/
           openwrt/bin/packages/
